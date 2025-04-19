@@ -39,13 +39,11 @@ export default function LanguagesForm({ initialLanguages = [], onSubmit, onCance
     onSubmit(languages);
   };
 
-  // Some common languages as suggestions
   const commonLanguages = [
     "English", "Spanish", "French", "German", "Chinese", "Japanese",
     "Hindi", "Arabic", "Russian", "Portuguese", "Italian"
   ];
 
-  // Filter out languages already added
   const suggestions = commonLanguages.filter(
     lang => !languages.includes(lang) &&
     lang.toLowerCase().includes(newLanguage.toLowerCase()) &&
