@@ -12,7 +12,6 @@ const JobDetails = () => {
   const [error, setError] = useState(null);
   const [hasApplied, setHasApplied] = useState(false);
   const [applyMessage, setApplyMessage] = useState("");
-  const [saved, setSaved] = useState(false);
   const [applyLoading, setApplyLoading] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
   const { id } = useParams();

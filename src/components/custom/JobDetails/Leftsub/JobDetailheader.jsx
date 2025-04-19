@@ -179,7 +179,7 @@ const JobDetailheader = ({job , formatDate , formatSalary , hasApplied , applyMe
       </div>
 
       
-     <ActionButton applyJob={applyJob} applyLoading={applyLoading} shareJob={shareJob} hasApplied={hasApplied}/>
+     <ActionButton job={job} applyJob={applyJob} applyLoading={applyLoading} shareJob={shareJob} hasApplied={hasApplied}/>
 
       {applyMessage && (
         <motion.div
@@ -188,7 +188,7 @@ const JobDetailheader = ({job , formatDate , formatSalary , hasApplied , applyMe
           transition={{ duration: 0.3 }}
           exit={{ opacity: 0, y: -10 }}
           className={`mt-4 p-3 rounded-lg text-center ${
-            hasApplied || applyMessage.includes("Success") || saved
+            hasApplied || applyMessage.includes("Success")
               ? "bg-green-100 text-green-800"
               : "bg-red-100 text-red-800"
           }`}

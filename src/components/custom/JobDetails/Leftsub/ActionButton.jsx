@@ -2,7 +2,7 @@ import React from 'react'
 import {motion} from 'framer-motion'
 
 
-const ActionButton = ({applyLoading , applyJob , shareJob , hasApplied}) => {
+const ActionButton = ({applyLoading , applyJob , shareJob , hasApplied , job}) => {
   return (
     <motion.div
     initial={{ y: 20, opacity: 0 }}
