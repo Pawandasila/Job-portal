@@ -430,7 +430,7 @@ export default function ProfilePage() {
 
   const currentProgressColors = progressColors[progressStatus];
 
-  const backendBaseUrl = "http://localhost:4000";
+  const backendBaseUrl = import.meta.env.VITE_BASE_URL;
   const resumeUrl = profile?.resume ? `${backendBaseUrl}${profile.resume}` : "";
   const photoUrl = profile?.photo
     ? profile.photo.startsWith("/uploads/")

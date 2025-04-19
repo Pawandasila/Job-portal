@@ -17,7 +17,7 @@ export default function ProfileDetailsForm({
     removeResume: false,
   });
 
-  const backendBaseUrl = "http://localhost:4000";
+  const backendBaseUrl = import.meta.env.VITE_BASE_URL;
 
   // Prefill previews for photo and resume
   const [photoPreview, setPhotoPreview] = useState(
