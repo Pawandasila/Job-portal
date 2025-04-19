@@ -7,24 +7,9 @@ import {
   Star,
   ArrowRight,
   Computer,
-  TrendingUp,
-  Target,
   Clock,
-  Building2,
-  Gem,
-  Sparkles,
-  Filter,
   ChevronRight,
 } from "lucide-react";
-
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 
 import { motion } from "framer-motion";
 import { useContext } from "react";
