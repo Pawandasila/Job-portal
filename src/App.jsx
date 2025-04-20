@@ -44,18 +44,14 @@ const RecruiterRoute = ({ children }) => {
 const JobSeekerRoute = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
 
-  if (isLoading) return <div>Loading...</div>;
-  return user?.role === "job-seeker" ? (
-    children
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (!user || user.role !== "job-seeker") {
+    return <Navigate to="/login" replace />;
+  }
 };
 
 function App() {
   return (
     <Routes>
-      
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
 
@@ -85,9 +81,12 @@ function App() {
           }
         >
           <Route index element={<RecuriterApplication />} />
-          <Route path="jobs" element = {<RecuriterJobs />} />
-          <Route path="applicant-profile/:id" element={<RecuriterApplicantProfile />} />
-          <Route path="company" element = {<RecruiterCompany />} />
+          <Route path="jobs" element={<RecuriterJobs />} />
+          <Route
+            path="applicant-profile/:id"
+            element={<RecuriterApplicantProfile />}
+          />
+          <Route path="company" element={<RecruiterCompany />} />
         </Route>
 
         {/* 404 Page */}

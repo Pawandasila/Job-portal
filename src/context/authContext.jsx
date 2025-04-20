@@ -26,8 +26,6 @@ export const AuthProvider = ({ children }) => {
           if (storedRefreshToken) {
             setRefreshToken(storedRefreshToken);
           }
-        } else {
-          navigate("/login");
         }
       } catch (error) {
         console.error("Error initializing auth context:", error);
