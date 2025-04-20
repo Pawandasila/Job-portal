@@ -23,7 +23,6 @@ const JobCategoriesSection = () => {
   const { user } = useContext(AuthContext);
   const toastShownRef = useRef(false);
   const axios = useAxios();
-  
 
   useEffect(() => {
     if (user && !toastShownRef.current) {
@@ -31,21 +30,22 @@ const JobCategoriesSection = () => {
       toastShownRef.current = true;
     }
   }, [user]);
+
   useEffect(() => {
     const fetchProgress = async () => {
       try {
         const response = await axios.get(`job-seeker/me`);
-        if(response.data.profileStatus.isProfileComplete === false) {
+        if (response.data.profileStatus.isProfileComplete === false) {
           toast.info("Please Visit your Profile to update your details");
         }
-        
       } catch (error) {
         console.error("Error fetching progress:", error);
       }
+    };
+    if (user?.role === "job-seeker") {
+      fetchProgress();
     }
-    fetchProgress();
-    console.log("hello ji");
-  },[axios])
+  }, [user , axios]);
   // console.log(user);
 
   const categories = {
@@ -180,7 +180,7 @@ const Homepage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <JobPortalHero/>
+      <JobPortalHero />
 
       <JobCategoriesSection />
 

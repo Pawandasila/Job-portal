@@ -1,6 +1,13 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence, useAnimation, useMotionValue, useTransform, useSpring } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useAnimation,
+  useMotionValue,
+  useTransform,
+  useSpring,
+} from "framer-motion";
 import {
   Home,
   Briefcase,
@@ -12,6 +19,8 @@ import {
   LogOut,
   Bell,
   ChevronRight,
+  PlusCircle,
+  Building,
 } from "lucide-react";
 
 import useAxios from "@/hooks/useAxios";
@@ -40,6 +49,10 @@ const Navbar = () => {
     { path: "/contact", text: "Contact", icon: <MessageCircle size={20} /> },
   ];
 
+  const isRecruiterPath = location.pathname.includes('/recruiter-access');
+
+  
+
   // Enhanced animations
   const logoRotate = useMotionValue(0);
   const logoScale = useTransform(logoRotate, [0, 360], [1, 1.2]);
@@ -47,10 +60,16 @@ const Navbar = () => {
   // Handle click outside to close menus
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
         setIsMobileMenuOpen(false);
       }
-      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
         setIsProfileOpen(false);
       }
     };
@@ -70,43 +89,47 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, [logoSpring]);
 
+  if(isRecruiterPath){
+    return null;
+  }
+
   // Mobile menu animations
   const mobileMenuVariants = {
     closed: {
       opacity: 0,
       height: 0,
-      transition: { 
-        duration: 0.4, 
+      transition: {
+        duration: 0.4,
         ease: [0.4, 0, 0.2, 1],
         when: "afterChildren",
         staggerChildren: 0.05,
-        staggerDirection: -1
-      }
+        staggerDirection: -1,
+      },
     },
     open: {
       opacity: 1,
       height: "auto",
-      transition: { 
-        duration: 0.4, 
+      transition: {
+        duration: 0.4,
         ease: [0.4, 0, 0.2, 1],
         when: "beforeChildren",
         staggerChildren: 0.05,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   const mobileItemVariants = {
-    closed: { 
-      opacity: 0, 
+    closed: {
+      opacity: 0,
       y: -10,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.2 },
     },
-    open: { 
-      opacity: 1, 
+    open: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.3 }
-    }
+      transition: { duration: 0.3 },
+    },
   };
 
   // Profile menu animations
@@ -115,79 +138,79 @@ const Navbar = () => {
       opacity: 0,
       scale: 0.95,
       y: -10,
-      transition: { 
-        duration: 0.25, 
+      transition: {
+        duration: 0.25,
         ease: [0.4, 0, 0.2, 1],
         when: "afterChildren",
         staggerChildren: 0.05,
-        staggerDirection: -1
-      }
+        staggerDirection: -1,
+      },
     },
     open: {
       opacity: 1,
       scale: 1,
       y: 0,
-      transition: { 
-        duration: 0.25, 
+      transition: {
+        duration: 0.25,
         ease: [0.4, 0, 0.2, 1],
         when: "beforeChildren",
         staggerChildren: 0.05,
-        delayChildren: 0.05
-      }
-    }
+        delayChildren: 0.05,
+      },
+    },
   };
 
   const profileItemVariants = {
-    closed: { 
-      opacity: 0, 
+    closed: {
+      opacity: 0,
       x: -5,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.2 },
     },
-    open: { 
-      opacity: 1, 
+    open: {
+      opacity: 1,
       x: 0,
-      transition: { duration: 0.25 }
-    }
+      transition: { duration: 0.25 },
+    },
   };
 
   // Hover animation variants
   const linkVariants = {
     initial: { scale: 1 },
-    hover: { 
-      scale: 1.05, 
-      transition: { duration: 0.2 }
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.2 },
     },
-    tap: { 
+    tap: {
       scale: 0.95,
-      transition: { duration: 0.1 }
-    }
+      transition: { duration: 0.1 },
+    },
   };
 
   // Button animation
   const buttonVariants = {
     initial: { scale: 1 },
-    hover: { 
+    hover: {
       scale: 1.05,
       boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)",
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10 
-      }
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
     },
-    tap: { 
+    tap: {
       scale: 0.95,
       boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10 
-      }
-    }
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
+    },
   };
 
   // Menu button animations
-  const Path = props => (
+  const Path = (props) => (
     <motion.path
       fill="transparent"
       strokeWidth="2"
@@ -218,7 +241,7 @@ const Navbar = () => {
                 d="M 3 16.5 L 20 16.5"
                 variants={{
                   open: { d: "M 3 2.5 L 20 16.5" },
-                  closed: { d: "M 3 16.5 L 20 16.5" }
+                  closed: { d: "M 3 16.5 L 20 16.5" },
                 }}
                 initial="closed"
                 animate="open"
@@ -233,7 +256,7 @@ const Navbar = () => {
                 d="M 3 2.5 L 20 2.5"
                 variants={{
                   open: { d: "M 3 16.5 L 20 2.5" },
-                  closed: { d: "M 3 2.5 L 20 2.5" }
+                  closed: { d: "M 3 2.5 L 20 2.5" },
                 }}
                 initial="closed"
                 animate="open"
@@ -272,19 +295,18 @@ const Navbar = () => {
   const handleLogout = async () => {
     buttonScaleControls.start({
       scale: [1, 0.9, 1],
-      transition: { duration: 0.3 }
+      transition: { duration: 0.3 },
     });
-    
+
     try {
       const response = await logoutUser();
       if (response.success) {
         toast.success(response.message);
         await logout();
-        
-        
+
         setIsProfileOpen(false);
         setIsMobileMenuOpen(false);
-        
+
         setTimeout(() => {
           navigate("/login");
         }, 300);
@@ -295,7 +317,7 @@ const Navbar = () => {
   };
 
   // Animated nav indicator
-  const NavIndicator = ({ isActive }) => (
+  const NavIndicator = ({ isActive }) =>
     isActive && (
       <motion.div
         layoutId="navIndicator"
@@ -303,11 +325,10 @@ const Navbar = () => {
         initial={{ borderRadius: 100 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
       />
-    )
-  );
+    );
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -379,11 +400,15 @@ const Navbar = () => {
                   >
                     <NavIndicator isActive={location.pathname === item.path} />
                     <motion.div
-                      animate={{ 
+                      animate={{
                         scale: hoveredItem === item.path ? 1.1 : 1,
-                        rotate: hoveredItem === item.path ? 5 : 0
+                        rotate: hoveredItem === item.path ? 5 : 0,
                       }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 15,
+                      }}
                     >
                       {item.icon}
                     </motion.div>
@@ -397,26 +422,6 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               {isLoggedIn ? (
                 <div className="flex items-center space-x-4">
-                  {/* Notifications */}
-                  {user.role === "jobseeker" && (
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="relative"
-                    >
-                      <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-600">
-                        <Bell size={20} />
-                        <motion.span 
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs"
-                        >
-                          2
-                        </motion.span>
-                      </button>
-                    </motion.div>
-                  )}
-
                   {/* User Profile Dropdown */}
                   <div className="relative" ref={profileMenuRef}>
                     <motion.button
@@ -426,7 +431,7 @@ const Navbar = () => {
                       onClick={() => setIsProfileOpen(!isProfileOpen)}
                       className="flex items-center space-x-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-2 rounded-full"
                     >
-                      <motion.div 
+                      <motion.div
                         whileHover={{ rotate: 10 }}
                         className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full flex items-center justify-center shadow-sm"
                       >
@@ -452,39 +457,57 @@ const Navbar = () => {
                           className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl py-1 z-10 border border-gray-100 overflow-hidden"
                         >
                           <div className="px-4 py-3 border-b">
-                            <motion.p 
+                            <motion.p
                               variants={profileItemVariants}
                               className="text-sm font-medium text-gray-900 truncate"
                             >
                               {user.firstName} {user.lastName}
                             </motion.p>
-                            <motion.p 
+                            <motion.p
                               variants={profileItemVariants}
                               className="text-xs text-gray-500 truncate"
                             >
                               {user.email}
                             </motion.p>
-                            <motion.p 
+                            <motion.p
                               variants={profileItemVariants}
                               className="text-xs text-gray-500 mt-1"
                             >
-                              Role: <span className="capitalize">{user.role}</span>
+                              Role:{" "}
+                              <span className="capitalize">{user.role}</span>
                             </motion.p>
                           </div>
-                          
-                          <motion.div variants={profileItemVariants}>
-                            <Link
-                              to="/profile"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors"
-                              onClick={() => setIsProfileOpen(false)}
-                            >
-                              <div className="flex items-center space-x-2">
-                                <User size={16} />
-                                <span>My Profile</span>
-                              </div>
-                            </Link>
-                          </motion.div>
-                          
+
+                          {user.role === "jobseeker" && (
+                            <motion.div variants={profileItemVariants}>
+                              <Link
+                                to="/profile"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors"
+                                onClick={() => setIsProfileOpen(false)}
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <User size={16} />
+                                  <span>My Profile</span>
+                                </div>
+                              </Link>
+                            </motion.div>
+                          )}
+
+                          {user.role === "recruiter" && (
+                            <motion.div variants={profileItemVariants}>
+                              <Link
+                                to="/recruiter-access?user=verified"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 transition-colors"
+                                onClick={() => setIsProfileOpen(false)}
+                              >
+                                <div className="flex items-center space-x-2">
+                                  <Building size={16} />
+                                  <span>Recuriter Access</span>
+                                </div>
+                              </Link>
+                            </motion.div>
+                          )}
+
                           <motion.div variants={profileItemVariants}>
                             <Link
                               to="/jobs?appliedFilter=applied"
@@ -497,7 +520,7 @@ const Navbar = () => {
                               </div>
                             </Link>
                           </motion.div>
-                          
+
                           <motion.div variants={profileItemVariants}>
                             <motion.button
                               animate={buttonScaleControls}
@@ -590,7 +613,11 @@ const Navbar = () => {
                     >
                       <motion.div
                         whileHover={{ rotate: 10, scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 15,
+                        }}
                       >
                         {item.icon}
                       </motion.div>
@@ -601,9 +628,12 @@ const Navbar = () => {
 
                 {isLoggedIn ? (
                   <>
-                    <motion.div variants={mobileItemVariants} className="border-t pt-2 mt-2">
+                    <motion.div
+                      variants={mobileItemVariants}
+                      className="border-t pt-2 mt-2"
+                    >
                       <div className="flex items-center space-x-2 px-3 py-3">
-                        <motion.div 
+                        <motion.div
                           whileHover={{ rotate: 10 }}
                           className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-full flex items-center justify-center"
                         >
@@ -632,6 +662,23 @@ const Navbar = () => {
                           <span>My Profile</span>
                         </Link>
                       </motion.div>
+
+                      {user.role === "recruiter" && (
+                        <motion.div
+                          variants={mobileItemVariants}
+                          whileHover="hover"
+                          whileTap="tap"
+                        >
+                          <Link
+                            to={`/recuriter-access?user=${user ? "verified" : "not-verified"}`}
+                            className="flex items-center space-x-2 px-3 py-3 text-gray-600 hover:bg-gray-50 rounded-lg"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <Building size={20} />
+                            <span>Recruiter Access</span>
+                          </Link>
+                        </motion.div>
+                      )}
 
                       <motion.div
                         variants={mobileItemVariants}

@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes, Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Routes, Outlet, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -11,41 +11,87 @@ import JobFilters from "./pages/JobFilters";
 import About from "./components/About";
 import JobDetails from "./pages/JobDetails";
 import Profile from "./pages/Profile";
-const Layout = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow px-4 py-8">
-        <Outlet />
-      </main>
-      <Footer />
-    </div>
+import { AuthContext } from "./context/authContext";
+import NotFound from "./pages/NotFound";
+import RecruiterLayout from "./components/custom/RecuritorDashboard/RecuritorLayout";
+import RecuriterApplication from "./components/custom/RecuritorDashboard/RecuriterApplication";
+import RecuriterJobs from "./components/custom/RecuritorDashboard/RecuriterJobs";
+import RecruiterCompany from "./components/custom/RecuritorDashboard/RecruiterCompany";
+import RecuriterApplicantProfile from "./components/custom/RecuritorDashboard/applicant/RecuriterApplicantProfile";
+
+const Layout = () => (
+  <div className="min-h-screen flex flex-col">
+    <Navbar />
+    <main className="flex-grow ">
+      <Outlet />
+    </main>
+    <Footer />
+  </div>
+);
+
+const RecruiterRoute = ({ children }) => {
+  const { user, isLoading } = useContext(AuthContext);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return user?.role === "recruiter" ? (
+    children
+  ) : (
+    <Navigate to="/login" replace />
+  );
+};
+
+const JobSeekerRoute = ({ children }) => {
+  const { user, isLoading } = useContext(AuthContext);
+
+  if (isLoading) return <div>Loading...</div>;
+  return user?.role === "job-seeker" ? (
+    children
+  ) : (
+    <Navigate to="/login" replace />
   );
 };
 
 function App() {
   return (
     <Routes>
-      {/* Auth pages without the Layout wrapper */}
+      
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      
-      {/* Routes with the Layout wrapper */}
+
       <Route element={<Layout />}>
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/jobs" element={<JobBoard />} />
         <Route path="/job-filters" element={<JobFilters />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/jobDetails/:id" element={<JobDetails />} />
-        {/* Catch-all route for 404 pages */}
-        <Route path="*" element={
-          <div className="text-center py-20">
-            <h1 className="text-4xl font-bold mb-4">Page Not Found</h1>
-            <p>The page you're looking for doesn't exist.</p>
-          </div>
-        } />
+
+        <Route
+          path="/profile"
+          element={
+            <JobSeekerRoute>
+              <Profile />
+            </JobSeekerRoute>
+          }
+        />
+
+        <Route
+          path="/recruiter-access"
+          element={
+            <RecruiterRoute>
+              <RecruiterLayout />
+            </RecruiterRoute>
+          }
+        >
+          <Route index element={<RecuriterApplication />} />
+          <Route path="jobs" element = {<RecuriterJobs />} />
+          <Route path="applicant-profile/:id" element={<RecuriterApplicantProfile />} />
+          <Route path="company" element = {<RecruiterCompany />} />
+        </Route>
+
+        {/* 404 Page */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
