@@ -45,7 +45,7 @@ const JobSeekerRoute = ({ children }) => {
   const { user, isLoading } = useContext(AuthContext);
 
   if (isLoading) return <div>Loading...</div>;
-  return user?.role === "job-seeker" ? (
+  return user?.role === "jobseeker" ? (
     children
   ) : (
     <Navigate to="/login" replace />
@@ -70,9 +70,9 @@ function App() {
         <Route
           path="/profile"
           element={
-            // <JobSeekerRoute>
+            <JobSeekerRoute>
               <Profile />
-            // </JobSeekerRoute>
+            </JobSeekerRoute>
           }
         />
 

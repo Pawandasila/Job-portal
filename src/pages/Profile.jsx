@@ -41,7 +41,6 @@ export default function ProfilePage() {
       setLoading(true);
       setError(null);
       const response = await axios.get(`/job-seeker/me`);
-
       if (response && response.data) {
         setProfile(response.data.jobSeeker);
         setProgressTracker(
