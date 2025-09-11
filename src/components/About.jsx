@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import logo from "../assets/Logo.jpg";
+import adhikari from "../assets/Adhikari.jpg"
 import { motion, useMotionValue, useTransform, useInView, useScroll } from "framer-motion";
 import {
   Users,
