@@ -62,7 +62,14 @@ const About = () => {
       linkedin: "https://linkedin.com/in/pawandasila",
       github: "https://github.com/pawandasila",
       description: "Expert in Node.js, Express, and MongoDB with a passion for building robust server-side applications"
-    }
+    },{
+      name: "Sourav Singh Adhikari",
+      role: "Backend Developer",
+      image: adhikari,
+      linkedin: "https://www.linkedin.com/in/sourav-singh-adhikari-4213231b7/",
+      github: "https://github.com/souravsinghadhikari",
+      description: "Expert in Node.js, Express, and MongoDB with a passion for building robust server-side applications"
+    }
   ];
 
   // Animation variants
